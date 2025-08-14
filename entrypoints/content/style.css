@@ -1,0 +1,72 @@
+/* корневой контейнер ui */
+.sui-root {
+  all: initial; /* WXT уже сбрасывает стили; эта строка допустима/избыточна */
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 14px;
+  color: #111;
+}
+
+/* попап у выделения */
+.sui-popover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2147483647;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+  padding: 6px;
+}
+
+.sui-btn-row {
+  display: flex;
+  gap: 6px;
+}
+
+.sui-btn {
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.sui-btn:hover {
+  background: #eef2ff;
+  border-color: #c7d2fe;
+}
+
+/* модалка */
+.sui-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.45);
+  display: grid;
+  place-items: center;
+  z-index: 2147483647;
+}
+
+.sui-modal {
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.28);
+  width: min(720px, calc(100vw - 32px));
+  padding: 16px;
+}
+
+.sui-input {
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 18px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 12px;
+}
+.sui-input:focus {
+  outline: none;
+  border-color: #818cf8;
+  box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.3);
+}
