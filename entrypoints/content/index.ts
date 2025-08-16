@@ -6,6 +6,7 @@ import googleLogo from "@/assets/google.svg";
 import youtubeLogo from "@/assets/youtube.svg";
 import redditLogo from "@/assets/reddit.svg";
 import wikipediaLogo from "@/assets/wikipedia.svg";
+import xLogo from "@/assets/x.svg";
 
 // ---- 3.A Провайдеры поиска (минимальный набор) ----
 type Provider = {
@@ -32,11 +33,11 @@ const PROVIDERS: Provider[] = [
     buildUrl: (q) =>
       `https://www.reddit.com/search/?q=${encodeURIComponent(q)}`,
   },
-  // {
-  //   id: "twitter/X",
-  //   iconUrl: xLogo,
-  //   buildUrl: (q) => ``,
-  // },
+  {
+    id: "twitter/X",
+    iconUrl: xLogo,
+    buildUrl: (q) => `https://x.com/search?q=${encodeURIComponent(q)}`,
+  },
   {
     id: "wikipedia",
     iconUrl: wikipediaLogo,
@@ -198,12 +199,12 @@ export default defineContentScript({
 
         const title = document.createElement("h2");
         title.className = "sui-title";
-        title.textContent = "Search Reactively!";
+        title.textContent = "Search Reactively";
 
         const input = document.createElement("input");
         input.type = "text";
         input.className = "sui-input";
-        input.placeholder = "Search...";
+        input.placeholder = "Type your query...";
 
         const row = document.createElement("div");
         row.className = "sui-btn-row";
@@ -214,7 +215,7 @@ export default defineContentScript({
           // b.textContent = p.label;
           b.title = `Search in ${p.id}`;
           b.innerHTML = `
-            <img src="${p.iconUrl}" height="32px" />`;
+            <img src="${p.iconUrl}" height="24px" />`;
           b.addEventListener("click", () => {
             const q = cleanQuery(input.value);
             if (q) openSearch(p.buildUrl(q));

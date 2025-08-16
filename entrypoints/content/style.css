@@ -15,7 +15,7 @@ html {
   top: 0;
   left: 0;
   z-index: 2147483647;
-  background: rgba(30, 30, 30, 0.7);
+  background: rgb(30, 30, 30);
   border-radius: 12px;
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
   padding: 6px;
@@ -23,15 +23,15 @@ html {
 
 .sui-btn-row {
   display: flex;
-  gap: 6px;
+  gap: 4px;
 }
 
 .sui-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #e5e7eb;
-  background: #f9fafb;
+  border: none;
+  background: transparent;
   padding: 5px;
   border-radius: 8px;
   cursor: pointer;
@@ -39,8 +39,7 @@ html {
 }
 
 .sui-btn:hover {
-  background: #eef2ff;
-  border-color: #c7d2fe;
+  background-color: rgba(88, 79, 79, 0.5);
 }
 
 /* модалка */
@@ -51,13 +50,12 @@ html {
   backdrop-filter: blur(8px);
   display: grid;
   place-items: center;
-  z-index: 2147483647;
   overflow: hidden;
 }
 
 .sui-modal {
-  background: rgba(30, 30, 30, 0.7);
-  backdrop-filter: blur(12px);
+  background: rgba(30, 30, 30, 0.85);
+  backdrop-filter: blur(15px);
   border-radius: 12px;
   width: min(720px, calc(100vw - 64px));
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
@@ -66,29 +64,36 @@ html {
   z-index: 100;
 }
 
-.sui-modal,
-.sui-overlay {
-  opacity: 1;
-}
-
-.sui-modal,
-.sui-overlay {
-  opacity: 1;
-  transition: opacity 0.2s ease-in-out;
+.sui-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 600;
+  margin-block: 0 16px;
+  /* background-image: linear-gradient(89deg, #ff00ef, #ffffff, #ff0000);
+  background-clip: text;
+  color: transparent; */
 }
 
 .sui-input {
+  height: 55px;
+  font-size: 22px;
   caret-color: #a8c7fa;
   color: #e3e3e3;
   width: 100%;
   box-sizing: border-box;
-  font-size: 18px;
   padding: 10px 12px;
   border-radius: 12px;
   border: none;
   margin-bottom: 12px;
   outline: none;
   background-color: rgba(0, 0, 0, 0.3);
+  transition: box-shadow 0.25s ease, background-color 0.25s ease;
+}
+
+.sui-input:focus {
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.2),
+    /* сиреневый акцент */ 0 0 12px rgba(168, 85, 247, 0.1); /* мягкое свечение */
 }
 
 .sui-input::placeholder {
