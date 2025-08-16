@@ -1,36 +1,40 @@
 // entrypoints/search-ui.content/index.ts
-import { defineContentScript, createShadowRootUi } from "#imports";
+// import { defineContentScript, createShadowRootUi } from "#imports";
 import { browser } from "wxt/browser";
 import "./style.css";
+import googleLogo from "@/assets/google.svg";
+import youtubeLogo from "@/assets/youtube.svg";
+import duckLogo from "@/assets/duckduckgo.svg";
+import stackoverflowLogo from "@/assets/stackoverflow.svg";
 
 // ---- 3.A Провайдеры поиска (минимальный набор) ----
 type Provider = {
   id: "google" | "youtube" | "stackoverflow" | "duck";
-  label: string; // короткий текст на кнопке
+  iconUrl: string;
   buildUrl: (q: string) => string;
 };
 
 const PROVIDERS: Provider[] = [
   {
     id: "google",
-    label: "G",
+    iconUrl: googleLogo,
     buildUrl: (q) => `https://www.google.com/search?q=${encodeURIComponent(q)}`,
   },
   {
     id: "youtube",
-    label: "YT",
+    iconUrl: youtubeLogo,
     buildUrl: (q) =>
       `https://www.youtube.com/results?search_query=${encodeURIComponent(q)}`,
   },
   {
     id: "stackoverflow",
-    label: "SO",
+    iconUrl: stackoverflowLogo,
     buildUrl: (q) =>
       `https://stackoverflow.com/search?q=${encodeURIComponent(q)}`,
   },
   {
     id: "duck",
-    label: "DDG",
+    iconUrl: duckLogo,
     buildUrl: (q) => `https://duckduckgo.com/?q=${encodeURIComponent(q)}`,
   },
 ];
@@ -82,7 +86,7 @@ export default defineContentScript({
         PROVIDERS.forEach((p) => {
           const btn = document.createElement("button");
           btn.className = "sui-btn";
-          btn.textContent = p.label;
+          btn.innerHTML = `<img src="${p.iconUrl}" height="20px" />`;
           btn.title = `Search in ${p.id}`;
           btn.addEventListener("click", () => {
             const sel = window.getSelection();
@@ -152,6 +156,10 @@ export default defineContentScript({
     });
     window.addEventListener("scroll", hideSelectionPopup, { passive: true });
 
+    const openModal = () => modalUi.mount();
+    const closeModal = () => modalUi.remove();
+    let opened = false;
+
     // ---- C2. Модалка по хоткею ----
     const modalUi = await createShadowRootUi(ctx, {
       name: "search-modal",
@@ -166,10 +174,17 @@ export default defineContentScript({
         const modal = document.createElement("div");
         modal.className = "sui-modal";
 
+        const header = document.createElement("div");
+        header.className = "sui-header";
+
+        const title = document.createElement("h2");
+        title.className = "sui-title";
+        title.textContent = "Search Reactively!";
+
         const input = document.createElement("input");
         input.type = "text";
         input.className = "sui-input";
-        input.placeholder = "Введите запрос…";
+        input.placeholder = "Search...";
 
         const row = document.createElement("div");
         row.className = "sui-btn-row";
@@ -177,31 +192,43 @@ export default defineContentScript({
         PROVIDERS.forEach((p) => {
           const b = document.createElement("button");
           b.className = "sui-btn";
-          b.textContent = p.label;
+          // b.textContent = p.label;
           b.title = `Search in ${p.id}`;
+          b.innerHTML = `
+            <img src="${p.iconUrl}" height="32px" />`;
           b.addEventListener("click", () => {
             const q = cleanQuery(input.value);
             if (q) openSearch(p.buildUrl(q));
             closeModal();
+            opened = false;
           });
           row.append(b);
         });
 
+        header.append(title);
+        modal.append(header);
         modal.append(input, row);
         overlay.append(modal);
         container.append(overlay);
 
         // UX
         overlay.addEventListener("click", (e) => {
-          if (e.target === overlay) closeModal();
+          if (e.target === overlay) {
+            closeModal();
+            opened = false;
+          }
         });
         input.addEventListener("keydown", (e) => {
-          if (e.key === "Escape") closeModal();
+          if (e.key === "Escape") {
+            closeModal();
+            opened = false;
+          }
           if (e.key === "Enter") {
             // по Enter default -> Google
             const q = cleanQuery(input.value);
             if (q) openSearch(PROVIDERS[0].buildUrl(q));
             closeModal();
+            opened = false;
           }
         });
 
@@ -210,12 +237,15 @@ export default defineContentScript({
       },
     });
 
-    const openModal = () => modalUi.mount();
-    const closeModal = () => modalUi.remove();
-
     // Сообщение от background по хоткею
     browser.runtime.onMessage.addListener((msg) => {
-      if (msg?.type === "OPEN_MODAL") openModal();
+      if (msg?.type === "OPEN_MODAL" && !opened) {
+        openModal();
+        opened = true;
+      } else {
+        closeModal();
+        opened = false;
+      }
     });
   },
 });
