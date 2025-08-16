@@ -4,12 +4,12 @@ import { browser } from "wxt/browser";
 import "./style.css";
 import googleLogo from "@/assets/google.svg";
 import youtubeLogo from "@/assets/youtube.svg";
-import duckLogo from "@/assets/duckduckgo.svg";
-import stackoverflowLogo from "@/assets/stackoverflow.svg";
+import redditLogo from "@/assets/reddit.svg";
+import wikipediaLogo from "@/assets/wikipedia.svg";
 
 // ---- 3.A Провайдеры поиска (минимальный набор) ----
 type Provider = {
-  id: "google" | "youtube" | "stackoverflow" | "duck";
+  id: "google" | "youtube" | "reddit" | "twitter/X" | "wikipedia";
   iconUrl: string;
   buildUrl: (q: string) => string;
 };
@@ -27,16 +27,35 @@ const PROVIDERS: Provider[] = [
       `https://www.youtube.com/results?search_query=${encodeURIComponent(q)}`,
   },
   {
-    id: "stackoverflow",
-    iconUrl: stackoverflowLogo,
+    id: "reddit",
+    iconUrl: redditLogo,
     buildUrl: (q) =>
-      `https://stackoverflow.com/search?q=${encodeURIComponent(q)}`,
+      `https://www.reddit.com/search/?q=${encodeURIComponent(q)}`,
   },
+  // {
+  //   id: "twitter/X",
+  //   iconUrl: xLogo,
+  //   buildUrl: (q) => ``,
+  // },
   {
-    id: "duck",
-    iconUrl: duckLogo,
-    buildUrl: (q) => `https://duckduckgo.com/?q=${encodeURIComponent(q)}`,
+    id: "wikipedia",
+    iconUrl: wikipediaLogo,
+    buildUrl: (q) =>
+      `https://en.wikipedia.org/wiki/Special:Search?search=${encodeURIComponent(
+        q
+      )}`,
   },
+  // {
+  //   id: "stackoverflow",
+  //   iconUrl: stackoverflowLogo,
+  //   buildUrl: (q) =>
+  //     `https://stackoverflow.com/search?q=${encodeURIComponent(q)}`,
+  // },
+  // {
+  //   id: "duck",
+  //   iconUrl: duckLogo,
+  //   buildUrl: (q) => `https://duckduckgo.com/?q=${encodeURIComponent(q)}`,
+  // },
 ];
 
 // ---- 3.B Вспомогательное ----

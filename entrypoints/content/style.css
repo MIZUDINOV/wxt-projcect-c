@@ -15,9 +15,8 @@ html {
   top: 0;
   left: 0;
   z-index: 2147483647;
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
+  background: rgba(30, 30, 30, 0.7);
+  border-radius: 12px;
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
   padding: 6px;
 }
@@ -79,8 +78,8 @@ html {
 }
 
 .sui-input {
-  caret-color: #fff;
-  color: #fff;
+  caret-color: #a8c7fa;
+  color: #e3e3e3;
   width: 100%;
   box-sizing: border-box;
   font-size: 18px;
@@ -93,5 +92,5 @@ html {
 }
 
 .sui-input::placeholder {
-  color: #fff;
+  color: #e3e3e3;
 }
