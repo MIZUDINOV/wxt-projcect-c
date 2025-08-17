@@ -6,7 +6,7 @@ export default defineConfig({
   manifest: {
     name: "Reactive search!",
     description:
-      "Поиск выделенного текста и модальное окно поиска по хоткею (Ctrl+Shift+F).",
+      "Search for selected text and a search modal window via hotkey (Ctrl+Shift+F).",
     version: "0.0.1",
 
     // Нужны для: tabs.create(), tabs.query(), отправка сообщений активной вкладке
