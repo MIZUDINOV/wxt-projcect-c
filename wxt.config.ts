@@ -4,7 +4,7 @@ import { defineConfig } from "wxt";
 export default defineConfig({
   // Всё, что нельзя или неудобно описать в entrypoints, указываем тут
   manifest: {
-    name: "Selection & Modal Search",
+    name: "Reactive search!",
     description:
       "Поиск выделенного текста и модальное окно поиска по хоткею (Ctrl+Shift+F).",
     version: "0.0.1",
@@ -19,7 +19,7 @@ export default defineConfig({
           default: "Ctrl+Shift+F",
           mac: "Command+Shift+F",
         },
-        description: "Открыть модальное окно поиска",
+        description: "Open the search popup",
       },
     },
   },
